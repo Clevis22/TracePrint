@@ -1,0 +1,17 @@
+{
+  "name": "TracePrint",
+  "version": "1.0.0",
+  "description": "TracePrint is a lightweight JavaScript Fingerprinting library.",
+  "main": "index.js",
+  "keywords": ["javascript", "library", "utility", "fingerprint"],
+  "author": "Clevis",
+  "license": "MIT", 
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Clevis22/TracePrint.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Clevis22/TracePrint.git/issues"
+  },
+  "homepage": "https://github.com/Clevis22/TracePrint"
+}
