@@ -1,5 +1,3 @@
-Here is a potential README description in Markdown format for the TracePrint fingerprinting library:
-
 # TracePrint
 
 TracePrint is a fingerprinting library that collects various device and browser information to generate a unique identifier.
