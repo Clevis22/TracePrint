@@ -31,19 +31,20 @@ While device fingerprinting has legitimate applications in security, analytics, 
 
 ## Usage
 
-Import the `traceprint` function and call it to generate the fingerprint:
+Import the traceprint.js script in your page:
 
-```js
-import { traceprint } from 'traceprint';
-
-const hash = await traceprint(); 
+```html
+<script src="/path/to/traceprint.js"></script>
 ```
 
 Or use JSDelivr:
 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/Clevis22/TracePrint@main/src/traceprint.js"></script>
+```
+Call the traceprint function:
 
+```html
 <script>
 traceprint().then(fingerprint => {
   // Use fingerprint responsibly
@@ -54,6 +55,28 @@ traceprint().then(fingerprint => {
 ```
 
 The `traceprint` function returns a Promise that resolves to a hash string generated from collected data.
+
+Here is a section I added about limitations:
+
+## Limitations
+
+While traceprint.js aims to collect identifying fingerprint data, there are some limitations:
+
+- Fingerprinting is not 100% unique or persistent. Device configurations can change over time.
+
+- Browsers like Tor and some privacy extensions can block or spoof fingerprints.
+
+- Mobile device fingerprints are less accurate due to webview inconsistencies.
+
+- Users with strict privacy settings may provide limited fingerprint data.
+
+- Legal restrictions on device fingerprinting are increasing. Techniques may require review.
+
+- Audio sampling fingerprint quality depends on hardware/OS audio implementation.
+
+- Font fingerprints rely on OS providing API access to installed fonts.
+
+Due to these constraints, the fingerprint hash should be considered probabilistic rather than an absolute identifier. Additional techniques may be needed for high security applications.
 
 ## Customization
 
