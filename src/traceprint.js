@@ -45,7 +45,7 @@ async function traceprint() {
     const plugs = getBrowserPlugins();
 
 
-
+    const webRTCInfo = await getWebRTCInfo();
     const localStorageSize = getLocalStorageSize();
     const localStorageQuota = getLocalStorageQuota();
     const audioFingerprint = await getAudioContextFingerprint();
@@ -54,6 +54,8 @@ async function traceprint() {
     const colorGamut = getColorGamut();
     const webDriver = webdriver();
     const pluginSpoof = pluginspoof();
+    const clientRects = getInvisibleElementClientRects();
+
 
     const data = {
         screenWidth,
@@ -84,7 +86,9 @@ async function traceprint() {
         ReducedMotion,
         colorGamut,
         webDriver,
-        pluginSpoof
+        pluginSpoof,
+        clientRects,
+        webRTCInfo
     };
 
 
@@ -181,6 +185,8 @@ async function getWebGPUInfo() {
         return `An error occurred while retrieving WebGPU information: ${error.message}`;
     }
 }
+
+
 
 async function main() {
     try {
@@ -318,4 +324,72 @@ function getBrowserPlugins() {
         });
     }
     return pluginList;
+}
+
+
+
+function getInvisibleElementClientRects() {
+
+    // Create invisible element
+    const element = document.createElement('div');
+    element.style.visibility = 'hidden';
+    element.style.position = 'absolute';
+    element.style.top = '-9999px';
+    document.body.appendChild(element);
+
+    // Populate with text
+    element.textContent = 'Sample text for fingerprinting';
+
+    // Get client rects
+    const clientRects = element.getClientRects();
+
+    // Remove element
+    document.body.removeChild(element);
+    return clientRects;
+
+}
+
+async function getWebRTCInfo() {
+
+    const peerConnection = new RTCPeerConnection({
+        iceServers: []
+    });
+
+    try {
+        const offer = await peerConnection.createOffer();
+        await peerConnection.setLocalDescription(offer);
+
+        const localSDP = peerConnection.localDescription;
+
+        // Get list of candidate networks
+        const networks = [];
+        peerConnection.getStats()
+            .then(stats => {
+                stats.forEach(report => {
+                    if (report.type === 'candidate-pair' && report.nominated) {
+                        const remoteCandidate = report.remoteCandidateId;
+                        networks.push(remoteCandidate.split(' ')[0]);
+                    }
+                });
+            });
+
+        // Extract browser plugin details
+        const plugins = [];
+        localSDP.sdp.replace(/a=rtpmap:(\d+) (\S+)\/([\d]+)/g, (m, payloadType, codec, rate) => {
+            plugins.push({
+                payloadType,
+                codec,
+                rate
+            });
+        });
+
+        return {
+            networks,
+            plugins
+        };
+
+    } finally {
+        peerConnection.close();
+    }
+
 }
