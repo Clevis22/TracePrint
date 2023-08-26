@@ -185,7 +185,7 @@ async function getWebGPUInfo() {
 async function main() {
     try {
         const hash = await traceprint();
-        console.log('Hash of Collected Data:', hash);
+        //console.log('Hash of Collected Data:', hash);
     } catch (error) {
         console.error('Error collecting device info:', error);
     }
