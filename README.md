@@ -41,12 +41,6 @@ traceprint().then(fingerprint => {
 
 The `traceprint` function returns a Promise that resolves to a hash string generated from the collected data.
 
-You can also log the collected data:
-
-```js 
-const hash = await traceprint();
-console.log(hash);
-```
 
 ## Customization
 
