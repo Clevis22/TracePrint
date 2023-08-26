@@ -1,10 +1,12 @@
-# TracePrint
+# TracePrint - Device Fingerprinting Library
 
-TracePrint is a fingerprinting library that collects various device and browser information to generate a unique identifier. Check out the demo here: [https://clevis22.github.io/TracePrint/](https://clevis22.github.io/TracePrint/)
+TracePrint is a fingerprinting library that collects various device and browser information to generate a unique identifier. 
+
+**Live Demo:** https://clevis22.github.io/TracePrint/
 
 ## Features
 
-- Gathers info like:
+- Gathers device fingerprints based on:
   - Screen dimensions
   - Browser plugins
   - Timezone
@@ -14,9 +16,18 @@ TracePrint is a fingerprinting library that collects various device and browser 
   - Local storage
   - ClientRects
   - And more!
-- Hashes collected data to generate unique identifier 
-- Includes utility functions for device type detection, color gamut, reduced motion, etc
-- Designed to be lightweight and fast
+- Hashes collected data to generate a unique identifier 
+- Includes utility functions for device type detection, color gamut, reduced motion, etc.
+- Lightweight and fast fingerprinting algorithm
+
+### Responsible Use
+
+While device fingerprinting has legitimate applications in security, analytics, and personalization, it also raises privacy concerns when used without user consent. When integrating TracePrint, please ensure:
+
+- Users are informed about fingerprinting and given a choice to opt-out
+- Data collection is limited to only necessary attributes
+- Fingerprints are handled securely and not shared without consent
+- Compliance with local regulations around user privacy and device tracking
 
 ## Usage
 
@@ -25,33 +36,32 @@ Import the `traceprint` function and call it to generate the fingerprint:
 ```js
 import { traceprint } from 'traceprint';
 
-const hash = await traceprint();
+const hash = await traceprint(); 
 ```
-Or use JSDelivr
+
+Or use JSDelivr:
+
 ```html
-<script src = "https://cdn.jsdelivr.net/gh/Clevis22/TracePrint@main/src/traceprint.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Clevis22/TracePrint@main/src/traceprint.js"></script>
+
 <script>
 traceprint().then(fingerprint => {
-    const userID = fingerprint
-    console.log('Fingerprint:', userID);
+  // Use fingerprint responsibly
 }).catch(error => {
-    console.error('Error:', error);
+  console.error('Error:', error); 
 });
 </script>
 ```
 
-The `traceprint` function returns a Promise that resolves to a hash string generated from the collected data.
-
+The `traceprint` function returns a Promise that resolves to a hash string generated from collected data.
 
 ## Customization
 
-The library collects a wide array of data points by default. You can customize what gets collected by modifying the `traceprint` function.
+You can customize data collection by modifying the `traceprint` function.
 
 ## Dependencies
 
-TracePrint requires:
-
-- Modern browser that supports Web APIs like WebGL, AudioContext, etc
+- Modern browser supporting Web APIs like WebGL, AudioContext, etc.
 - Crypto API for hashing data
 
 ## License
