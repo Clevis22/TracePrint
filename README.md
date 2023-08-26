@@ -1,6 +1,6 @@
 # TracePrint
 
-TracePrint is a fingerprinting library that collects various device and browser information to generate a unique identifier.
+TracePrint is a fingerprinting library that collects various device and browser information to generate a unique identifier. Check out the demo here: [https://clevis22.github.io/TracePrint/](https://clevis22.github.io/TracePrint/)
 
 ## Features
 
