@@ -29,6 +29,14 @@ const hash = await traceprint();
 Or use JSDelivr
 ```html
 <script src = "https://cdn.jsdelivr.net/gh/Clevis22/TracePrint@main/src/index.js"></script>
+<script>
+traceprint().then(fingerprint => {
+    const userID = fingerprint
+    console.log('Fingerprint:', userID);
+}).catch(error => {
+    console.error('Error:', error);
+});
+</script>
 ```
 
 The `traceprint` function returns a Promise that resolves to a hash string generated from the collected data.
