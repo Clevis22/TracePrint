@@ -28,7 +28,7 @@ const hash = await traceprint();
 ```
 Or use JSDelivr
 ```html
-<script src = "https://cdn.jsdelivr.net/gh/Clevis22/TracePrint@main/src/index.js"></script>
+<script src = "https://cdn.jsdelivr.net/gh/Clevis22/TracePrint@main/src/traceprint.js"></script>
 <script>
 traceprint().then(fingerprint => {
     const userID = fingerprint
