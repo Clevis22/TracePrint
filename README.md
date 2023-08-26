@@ -26,6 +26,10 @@ import { traceprint } from 'traceprint';
 
 const hash = await traceprint();
 ```
+Or use JSDelivr
+```html
+<script src = "https://cdn.jsdelivr.net/gh/Clevis22/TracePrint@main/src/index.js"></script>
+```
 
 The `traceprint` function returns a Promise that resolves to a hash string generated from the collected data.
 
