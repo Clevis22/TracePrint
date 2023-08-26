@@ -12,6 +12,7 @@ TracePrint is a fingerprinting library that collects various device and browser 
   - WebGL
   - Audio fingerprint
   - Local storage
+  - ClientRects
   - And more!
 - Hashes collected data to generate unique identifier 
 - Includes utility functions for device type detection, color gamut, reduced motion, etc
