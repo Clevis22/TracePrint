@@ -1,4 +1,4 @@
-// TracePrint created by Clevis22 under MIT Licens 
+// TracePrint created by Clevis22 under MIT license
 // https://github.com/Clevis22/TracePrint/ 
 
 
