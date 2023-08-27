@@ -1,3 +1,7 @@
+// TracePrint created by Clevis22 under MIT Licens 
+// https://github.com/Clevis22/TracePrint/ 
+
+
 async function traceprint() {
     const screenWidth = window.screen.width;
     const maxTouchPoints = navigator.maxTouchPoints;
@@ -16,8 +20,6 @@ async function traceprint() {
     const networkType = navigator.connection ? navigator.connection.effectiveType : 'unknown';
     ReducedMotion = "0"
     if (isReducedMotionPreferred()) {
-        // User prefers reduced motion
-        // You can adjust your animations or UI accordingly
         ReducedMotion = "Reduced motion is preferred"
     } else {
         // User does not prefer reduced motion
@@ -36,15 +38,9 @@ async function traceprint() {
         currency: 'USD'
     });
     const formattedCurrency = currencyFormatter.format(12345.67);
-
     const prefersDarkUI = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-
     const dtype = detectDeviceType();
-
     const plugs = getBrowserPlugins();
-
-
     const webRTCInfo = await getWebRTCInfo();
     const localStorageSize = getLocalStorageSize();
     const localStorageQuota = getLocalStorageQuota();
@@ -56,6 +52,8 @@ async function traceprint() {
     const pluginSpoof = pluginspoof();
     const clientRects = getInvisibleElementClientRects();
     const emojis = calculateAndDisplayHash();
+    const windowProperties = countWindowProperties()
+ 
 
 
     const data = {
@@ -90,7 +88,8 @@ async function traceprint() {
         pluginSpoof,
         clientRects,
         webRTCInfo,
-        emojis
+        emojis,
+        windowProperties
     };
 
 
@@ -138,7 +137,7 @@ async function traceprint() {
     return hashHex;
 }
 
-
+//wegGPU Info
 async function getWebGPUInfo() {
     try {
         await delay(2000);
@@ -195,12 +194,13 @@ async function main() {
         const hash = await traceprint();
         //console.log('Hash of Collected Data:', hash);
     } catch (error) {
-        console.error('Error collecting device info:', error);
+      const hash = "Error Getting Hash"
     }
 }
 
 main();
 
+// Audio context fingerprinting, most browsers will refuse to start
 async function getAudioContextFingerprint() {
     const audioContext = new AudioContext();
     const oscillatorNode = audioContext.createOscillator();
@@ -238,21 +238,22 @@ function getStandardDeviation(magnitude) {
     return Math.sqrt(sumOfSquares / magnitude.length);
 }
 
-
+// function to add a dely to reduce load
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// check if reduced motion is prefered
 function isReducedMotionPreferred() {
     try {
         return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     } catch (error) {
-        // Handle the error gracefully, e.g., by assuming no preference for reduced motion.
-        console.error('Error checking reduced motion preference:', error);
         return false; // Return a default value
     }
 }
 
+
+//get screen color gamut
 function getColorGamut() {
     try {
         if (window.matchMedia('(color-gamut: srgb)').matches) {
@@ -265,11 +266,11 @@ function getColorGamut() {
             return 'Unknown';
         }
     } catch (error) {
-        console.error('Error getting color gamut:', error);
         return 'Unknown';
     }
 }
 
+// test if user is bot
 function webdriver() {
     if (navigator.webdriver) {
         return true
@@ -278,6 +279,7 @@ function webdriver() {
     }
 }
 
+// Try to test if plugins might be hidden
 function pluginspoof() {
     if (navigator.plugins.length === 0) {
         return "spoofed"
@@ -286,6 +288,7 @@ function pluginspoof() {
     }
 }
 
+// detect userAgent
 function detectDeviceType() {
     var userAgent = navigator.userAgent;
     var deviceType = "desktop";
@@ -299,6 +302,7 @@ function detectDeviceType() {
     return deviceType;
 }
 
+//Get local storage quota
 function getLocalStorageQuota() {
     if ('localStorage' in window) {
         return (localStorage.length * 16 / (1024 * 1024)).toFixed(2) + ' MB';
@@ -306,6 +310,7 @@ function getLocalStorageQuota() {
     return 'N/A';
 }
 
+//get local storage size
 function getLocalStorageSize() {
     if ('localStorage' in window) {
         return JSON.stringify(localStorage).length;
@@ -313,23 +318,36 @@ function getLocalStorageSize() {
     return 'N/A';
 }
 
+//Get Browser Plugnis
 function getBrowserPlugins() {
-    var plugins = navigator.plugins;
     var pluginList = [];
-    for (var i = 0; i < plugins.length; i++) {
-        pluginList.push({
-            name: plugins[i].name,
-            description: plugins[i].description,
-            filename: plugins[i].filename,
-            version: plugins[i].version,
-            enabled: plugins[i].enabled
-        });
+    
+    try {
+        var plugins = navigator.plugins;
+        
+        if (plugins) {
+            for (var i = 0; i < plugins.length; i++) {
+                pluginList.push({
+                    name: plugins[i].name,
+                    description: plugins[i].description,
+                    filename: plugins[i].filename,
+                    version: plugins[i].version,
+                    enabled: plugins[i].enabled
+                });
+            }
+        } else {
+            return 0; // Plugins information not available.
+        }
+    } catch (error) {
+        return 0; // Error occurred while fetching browser plugins.
     }
+    
     return pluginList;
 }
 
 
 
+// Get clientRects on an invisible element
 function getInvisibleElementClientRects() {
 
     // Create invisible element
@@ -351,6 +369,7 @@ function getInvisibleElementClientRects() {
 
 }
 
+//Get webRTC information
 async function getWebRTCInfo() {
 
     const peerConnection = new RTCPeerConnection({
@@ -499,4 +518,20 @@ async function getEmojiSize(emoji) {
         width: clientRect.width,
         height: clientRect.height
     };
+}
+
+function countWindowProperties() {
+  try {
+    let propertyCount = 0;
+
+    for (let property in window) {
+      if (window.hasOwnProperty(property)) {
+        propertyCount++;
+      }
+    }
+
+    return propertyCount;
+  } catch (error) {
+    return 0;
+  }
 }
