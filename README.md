@@ -1,6 +1,7 @@
 # TracePrint - Device Fingerprinting Library
 
 TracePrint is a fingerprinting library that collects various device and browser information to generate a unique identifier. 
+Built off of methods shown on [personaldata.info](https://personaldata.info)
 
 **Live Demo:** https://clevis22.github.io/TracePrint/
 
