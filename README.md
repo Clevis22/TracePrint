@@ -57,8 +57,6 @@ traceprint().then(fingerprint => {
 
 The `traceprint` function returns a Promise that resolves to a hash string generated from collected data.
 
-Here is a section I added about limitations:
-
 ## Limitations
 
 While traceprint.js aims to collect identifying fingerprint data, there are some limitations:
